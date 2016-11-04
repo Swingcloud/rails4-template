@@ -1,0 +1,10 @@
+en:
+  create:
+    success: "Successfully create"
+    failure: "Please type correct data"
+  edit:
+    success: "Successfully edited!"
+    failure: "Please input the name!"
+  destroy:
+    success: "Successfully destroy!"
+    failure: "Please insert right id"
