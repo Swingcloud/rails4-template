@@ -7,6 +7,9 @@ gem 'activerecord-postgis-adapter'
 gem 'redis'
 gem 'redis-objects', require: "redis/objects"
 
+#CORS
+gem 'rack-cors'
+
 # stores
 gem 'dalli'
 gem 'connection_pool'
