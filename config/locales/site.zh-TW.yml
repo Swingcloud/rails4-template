@@ -1,0 +1,10 @@
+zh-TW:
+  create:
+    success: "創建成功！"
+    failure: "請輸入正確數值。"
+  edit:
+    success: "修改成功！"
+    failure: "請輸入正確的名稱。"
+  destroy:
+    success: "刪除成功！"
+    failure: "請輸入正確的ID。"

@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Api::SitesController, type: :request do
+
   describe "#index" do
     before { FactoryGirl.create(:site) }
-
+ 
     subject do
-      get "/api/sites.json"
+      get "/api/sites.json", {},  'HTTP_ACCEPT_LANGUAGE' => 'zh-TW' 
       JSON.parse(response.body)
     end
 
@@ -19,23 +20,23 @@ RSpec.describe Api::SitesController, type: :request do
 
   describe "#create" do 
     it "should return errors" do 
-      post "/api/sites"
+      post "/api/sites", {},  'HTTP_ACCEPT_LANGUAGE' => 'zh-TW'
       parsed_data = JSON.parse( response.body )
       expect(parsed_data).to eq(
-        {"message" => "Please type correct data"}
+        {"message" => I18n.t("create.failure")}
       )
       expect(response).to have_http_status(400)
     end
 
     it "should return site and success message" do 
-      post "/api/sites", :name => "foo"
+      post "/api/sites", {:name => "foo"}, {'HTTP_ACCEPT_LANGUAGE' => 'zh-TW'}
 
       expect(response).to have_http_status(200)
       parsed_data = JSON.parse( response.body )
       site = Site.last
       expect(parsed_data).to eq(
         { "site" => JSON.parse(site.to_json) ,
-          "message" => "successfully create"} 
+          "message" => I18n.t("create.success")} 
       )
       expect(site.name).to eq("foo")
     end
@@ -44,22 +45,22 @@ RSpec.describe Api::SitesController, type: :request do
   describe "#edit" do 
     before { @site = Site.create(:name => "test123") }
     it "should error if no any keys" do
-      patch "/api/sites/#{@site.id}"
+      patch "/api/sites/#{@site.id}", {},  'HTTP_ACCEPT_LANGUAGE' => 'zh-TW'
       parsed_data = JSON.parse( response.body )
       expect(parsed_data).to eq(
-        {"message" => "Please input the name!"}
+        {"message" => I18n.t("edit.failure")}
       )
       expect(response).to have_http_status(400)
     end
 
     it "should return site and success message" do 
-      patch "/api/sites/#{@site.id}", :name => "I am changing!"
+      patch "/api/sites/#{@site.id}", {:name => "I am changing!"} , {'HTTP_ACCEPT_LANGUAGE' => 'zh-TW'}
       expect(response).to have_http_status(200)
       parsed_data = JSON.parse( response.body )
       @site.reload
       expect(parsed_data).to eq(
         { "site" => JSON.parse(@site.to_json) ,
-          "message" => "successfully edited!"} 
+          "message" => I18n.t("edit.success")} 
       )
       expect(@site.name).to eq("I am changing!")
     end
@@ -68,19 +69,19 @@ RSpec.describe Api::SitesController, type: :request do
   describe "#destroy" do 
     before { @site = Site.create(:name => "test123") }
     it "should return error message" do 
-      delete "/api/sites/#{@site.id+1}"
+      delete "/api/sites/#{@site.id+1}", {},  'HTTP_ACCEPT_LANGUAGE' => 'zh-TW'
       parsed_data = JSON.parse( response.body)
       expect(parsed_data).to eq(
-        {"message" => "please insert right id"}
+        {"message" => I18n.t("destroy.failure")}
       )
       expect(response).to have_http_status(400)
     end
 
     it "should return seccess message" do 
-      delete "/api/sites/#{@site.id}"
+      delete "/api/sites/#{@site.id}", {},  'HTTP_ACCEPT_LANGUAGE' => 'zh-TW'
       parsed_data = JSON.parse( response.body)
       expect(parsed_data).to eq(
-        {"message" => "succesfully destroy!"}
+        {"message" => I18n.t("destroy.success")}
       )
     end
   end

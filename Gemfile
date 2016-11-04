@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 gem 'rails', '4.2.6'
 
+#i18n
+gem "rails-i18n"
+
 # DB
 gem 'pg'
 gem 'activerecord-postgis-adapter'
