@@ -1,0 +1,14 @@
+<%= form_for [@site,@page] do |f| %>
+	<% if @page.errors.any? %>
+    <ul>
+      <% @page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+	<% end %>
+
+		<%= render :partial => "form", :locals => {:f => f} %>
+
+    <%= f.submit "編輯" , :class =>"btn btn-primary"%>
+    
+<% end %>
