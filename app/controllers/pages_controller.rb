@@ -46,7 +46,7 @@ class PagesController < ApplicationController
 	end
 
 	def set_page
-		@page = Page.find(params[:id])
+		@page = Page.find_by_slug(params[:id])
 	end
 
 	def set_site
